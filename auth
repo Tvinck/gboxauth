@@ -1,0 +1,21 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+verification_code = "HelpPlayIPA"  # Установите свой проверочный код
+
+@app.route('/download', methods=['POST'])
+def download_app():
+    data = request.get_json()
+
+    if "verificationCode" in data and data["verificationCode"] == verification_code:
+        # Пользователь ввел правильный код, разрешаем скачивание
+        app_name = data.get("appName", "")
+        # Здесь реализуй логику для обработки скачивания приложения
+        return jsonify({"status": "success", "message": f"Downloading {app_name}..."})
+    else:
+        # Неверный код, отправляем сообщение об ошибке
+        return jsonify({"status": "error", "message": "Invalid verification code"})
+
+if name == '__main__':
+    app.run(port=5000)  # Измените порт по необходимости
